@@ -1,0 +1,27 @@
+name: Jekyll Build (Root Source)
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Show repo structure
+        run: 
+          pwd
+          ls -la
+          echo "=== _config.yml location ==="
+          find . -name "_config.yml" 2>/dev/null
+      
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+      
+      - name: Build Jekyll site (ROOT source)
+        run: bundle exec jekyll build --source . --destination ./_site
